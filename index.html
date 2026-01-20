@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Broker | Premium Domains Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+            color: #ff9f43;
+            background: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .logo-text h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo-text p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: #ff9f43;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: #ff9f43;
+            bottom: 0;
+            left: 0;
+            transition: width 0.3s;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            text-align: center;
+            border-bottom: 5px solid #3498db;
+        }
+        
+        .hero-content h2 {
+            font-size: 48px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero-content h2 span {
+            color: #3498db;
+            position: relative;
+        }
+        
+        .hero-content h2 span::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            background: #ff9f43;
+            bottom: -5px;
+            left: 0;
+            border-radius: 5px;
+        }
+        
+        .hero-content p {
+            font-size: 20px;
+            color: #555;
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff9f43 0%, #ff7f00 100%);
+            color: white;
+            padding: 18px 40px;
+            font-size: 18px;
+            font-weight: 700;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0 6px 15px rgba(255, 159, 67, 0.3);
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 20px rgba(255, 159, 67, 0.4);
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 100px 0;
+            background-color: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h3 {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 18px;
+            color: #7f8c8d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: #3498db;
+            box-shadow: 0 15px 30px rgba(52, 152, 219, 0.2);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #3498db 0%, #2c3e50 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 32px;
+            color: white;
+        }
+        
+        .service-card:nth-child(2) .service-icon {
+            background: linear-gradient(135deg, #ff9f43 0%, #e74c3c 100%);
+        }
+        
+        .service-card:nth-child(3) .service-icon {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+        }
+        
+        .service-card h4 {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .service-card p {
+            color: #555;
+            margin-bottom: 20px;
+        }
+        
+        /* Domain Categories */
+        .categories {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .category-item {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .category-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(52, 152, 219, 0.15);
+        }
+        
+        .category-item i {
+            font-size: 28px;
+            color: #3498db;
+            margin-bottom: 15px;
+        }
+        
+        .category-item h5 {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        /* How It Works */
+        .process {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 0 20px;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #3498db;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .step:nth-child(2) .step-number {
+            background: #ff9f43;
+        }
+        
+        .step:nth-child(3) .step-number {
+            background: #2ecc71;
+        }
+        
+        .step h4 {
+            font-size: 20px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .contact-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .contact-content h3 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-content p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .email-contact {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: white;
+            font-size: 22px;
+            font-weight: 700;
+            transition: all 0.3s;
+            margin-bottom: 50px;
+            border: 2px solid transparent;
+        }
+        
+        .email-contact:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #ff9f43;
+            transform: translateY(-5px);
+        }
+        
+        .email-contact i {
+            font-size: 28px;
+            margin-right: 15px;
+            color: #ff9f43;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .social-link {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            background: #ff9f43;
+            transform: translateY(-5px);
+        }
+        
+        /* Footer */
+        footer {
+            background: #1a252f;
+            color: #95a5a6;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .copyright {
+            font-size: 16px;
+        }
+        
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: #95a5a6;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: #3498db;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-content h2 {
+                font-size: 40px;
+            }
+            
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .process-steps {
+                flex-direction: column;
+                align-items: center;
+                gap: 40px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero-content h2 {
+                font-size: 32px;
+            }
+            
+            .hero-content p {
+                font-size: 18px;
+            }
+            
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .email-contact {
+                font-size: 18px;
+                padding: 15px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Domain Broker</h1>
+                    <p>Premium Domains Marketplace</p>
+                </div>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#process">How It Works</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <h2>Find Your Perfect <span>Domain Name</span></h2>
+            <p>As an experienced domain broker, I connect buyers with premium domain names that elevate brands and drive business growth. Let me help you find the perfect digital identity for your next project.</p>
+            <a href="#contact" class="cta-button">Get Your Domain Today</a>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h3>My Domain Services</h3>
+                <p>Comprehensive domain brokerage services to help you find, negotiate, and acquire the perfect domain name.</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- Service 1 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>Domain Research</h4>
+                    <p>I help you find available domain names that match your brand, industry, and target audience. Using advanced tools and market knowledge to identify the best options.</p>
+                    <ul style="text-align: left; padding-left: 20px; color: #555;">
+                        <li>Brandable name discovery</li>
+                        <li>Keyword research</li>
+                        <li>Competitor analysis</li>
+                        <li>Market trends evaluation</li>
+                    </ul>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Brokerage & Negotiation</h4>
+                    <p>Professional negotiation services to secure domains at the best possible price. I act as an intermediary between buyers and sellers to facilitate smooth transactions.</p>
+                    <ul style="text-align: left; padding-left: 20px; color: #555;">
+                        <li>Price negotiation</li>
+                        <li>Secure escrow services</li>
+                        <li>Confidential transactions</li>
+                        <li>Contract preparation</li>
+                    </ul>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h4>Domain Acquisition</h4>
+                    <p>Complete acquisition services including aftermarket domain purchases, expired domain acquisitions, and private sales. I handle all technical aspects of the transfer process.</p>
+                    <ul style="text-align: left; padding-left: 20px; color: #555;">
+                        <li>Aftermarket purchases</li>
+                        <li>Expired domain acquisitions</li>
+                        <li>Private sales facilitation</li>
+                        <li>Secure transfer process</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Domain Categories -->
+            <div class="categories" style="margin-top: 60px;">
+                <div class="section-title">
+                    <h4>Domain Categories I Specialize In</h4>
+                </div>
+                
+                <div class="categories-grid">
+                    <div class="category-item">
+                        <i class="fas fa-briefcase"></i>
+                        <h5>Business & Brand</h5>
+                        <p>Short, memorable names for businesses</p>
+                    </div>
+                    
+                    <div class="category-item">
+                        <i class="fas fa-laptop-code"></i>
+                        <h5>Technology</h5>
+                        <p>Tech startups, SaaS, AI, and software</p>
+                    </div>
+                    
+                    <div class="category-item">
+                        <i class="fas fa-leaf"></i>
+                        <h5>Eco & Sustainable</h5>
+                        <p>Green technology and eco-friendly brands</p>
+                    </div>
+                    
+                    <div class="category-item">
+                        <i class="fas fa-heartbeat"></i>
+                        <h5>Health & Wellness</h5>
+                        <p>Healthcare, fitness, and wellness brands</p>
+                    </div>
+                    
+                    <div class="category-item">
+                        <i class="fas fa-credit-card"></i>
+                        <h5>Finance & Crypto</h5>
+                        <p>Fintech, cryptocurrency, and financial services</p>
+                    </div>
+                    
+                    <div class="category-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <h5>Education</h5>
+                        <p>Edtech, courses, and educational platforms</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="process" id="process">
+        <div class="container">
+            <div class="section-title">
+                <h3>How Domain Brokerage Works</h3>
+                <p>A simple, transparent process to help you acquire the perfect domain name for your business or project.</p>
+            </div>
+            
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Consultation</h4>
+                    <p>We discuss your requirements, budget, and vision. I learn about your business to understand what type of domain would work best for you.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Research & Options</h4>
+                    <p>I conduct thorough research and present you with available domain options that match your criteria and budget.</p>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Acquisition & Transfer</h4>
+                    <p>Once you select a domain, I handle negotiations, secure payment through escrow, and manage the transfer process to your account.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container contact-content">
+            <h3>Ready to Find Your Perfect Domain?</h3>
+            <p>Contact me directly for domain inquiries, consultation, or to start your domain search. I specialize in connecting buyers with premium domain names for their business needs.</p>
+            
+            <a href="mailto:med@bouaroua.com" class="email-contact">
+                <i class="fas fa-envelope"></i>
+                med@bouaroua.com
+            </a>
+            
+            <p>Response time: Usually within 24 hours</p>
+            
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="copyright">
+                <p>&copy; 2023 Domain Broker. All rights reserved.</p>
+                <p style="margin-top: 10px; font-size: 14px;">Professional domain brokerage services</p>
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a, .cta-button').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Highlight current section in navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('nav a');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.clientHeight;
+                if(scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if(link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Add animation to service cards on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.classList.add('animated');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.service-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
