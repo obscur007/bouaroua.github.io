@@ -1,0 +1,142 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String    @unique
+  products  Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Supplier {
+  id            Int       @id @default(autoincrement())
+  companyName   String
+  contactPerson String?
+  email         String?
+  phone         String?
+  address       String?
+  products      Product[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Customer {
+  id          Int          @id @default(autoincrement())
+  name        String
+  phone       String?
+  address     String?
+  sales       Sale[]
+  creditSales CreditSale[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+model Product {
+  id            Int             @id @default(autoincrement())
+  name          String
+  sku           String          @unique
+  categoryId    Int?
+  supplierId    Int?
+  purchasePrice Decimal
+  sellingPrice  Decimal
+  stockQuantity Int             @default(0)
+  minimumStock  Int             @default(0)
+  category      Category?       @relation(fields: [categoryId], references: [id])
+  supplier      Supplier?       @relation(fields: [supplierId], references: [id])
+  saleItems     SaleItem[]
+  movements     StockMovement[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+model Sale {
+  id            Int           @id @default(autoincrement())
+  reference     String        @unique
+  customerId    Int?
+  paymentMethod PaymentMethod
+  saleDate      DateTime
+  totalAmount   Decimal
+  totalCost     Decimal
+  totalProfit   Decimal
+  notes         String?
+  customer      Customer?     @relation(fields: [customerId], references: [id])
+  items         SaleItem[]
+  creditSale    CreditSale?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model SaleItem {
+  id            Int      @id @default(autoincrement())
+  saleId        Int
+  productId     Int
+  quantity      Int
+  purchasePrice Decimal
+  sellingPrice  Decimal
+  lineTotal     Decimal
+  sale          Sale     @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  product       Product  @relation(fields: [productId], references: [id])
+}
+
+model CreditSale {
+  id              Int             @id @default(autoincrement())
+  saleId           Int             @unique
+  customerId       Int
+  totalAmount      Decimal
+  paidAmount       Decimal         @default(0)
+  remainingAmount  Decimal
+  status           CreditStatus    @default(UNPAID)
+  sale             Sale            @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  customer         Customer        @relation(fields: [customerId], references: [id])
+  payments         CreditPayment[]
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+}
+
+model CreditPayment {
+  id           Int        @id @default(autoincrement())
+  creditSaleId Int
+  amount       Decimal
+  paidAt       DateTime
+  note         String?
+  creditSale   CreditSale @relation(fields: [creditSaleId], references: [id], onDelete: Cascade)
+  createdAt    DateTime   @default(now())
+}
+
+model StockMovement {
+  id           Int          @id @default(autoincrement())
+  productId    Int
+  movementType MovementType
+  quantity     Int
+  unitCost     Decimal?
+  reference    String?
+  note         String?
+  product      Product      @relation(fields: [productId], references: [id])
+  createdAt    DateTime     @default(now())
+}
+
+enum PaymentMethod {
+  Cash
+  Cheque
+  Credit
+}
+
+enum CreditStatus {
+  UNPAID
+  PARTIAL
+  PAID
+}
+
+enum MovementType {
+  PURCHASE
+  SALE
+  ADJUSTMENT
+  RETURN
+}
